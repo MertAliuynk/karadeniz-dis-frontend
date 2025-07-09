@@ -411,7 +411,7 @@ const AdminPage: React.FC = () => {
     }
   };
 
-  const handleEdit = (item: unknown, endpoint: string) => {
+  const handleEdit = (item: any, endpoint: string) => {
     if (endpoint === 'branches') {
       setFormData({
         ...item,
