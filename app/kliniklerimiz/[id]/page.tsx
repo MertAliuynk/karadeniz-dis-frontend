@@ -4,11 +4,12 @@ import Footer from '@/components/layout/Footer';
 import SocialBar from '@/components/layout/SocialBar';
 import KlinikClientContent from './KlinikClientContent';
 
-export default async function KlinikDetayPage({ params }: { params: { id: string } }) {
+export default async function KlinikDetayPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   let branch = null;
   try {
     const res = await axios.get(`https://webapi.karadenizdis.com/api/branches`);
-    branch = res.data.find((b: any) => String(b.id) === params.id);
+    branch = res.data.find((b: any) => String(b.id) === id);
   } catch (e) {
     branch = null;
   }
