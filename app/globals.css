@@ -1,0 +1,55 @@
+@import "tailwindcss";
+*{
+    user-select: none;
+}
+
+/* Scrollbar gizleme */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}
+
+@keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.heartbeat {
+  animation: heartbeat 2s infinite;
+}
+
+.gradient-icon {
+  /* Gradient arka plan */
+  background: linear-gradient(90deg, #4964a9, #022171);
+
+  /* İkonun kendi rengini transparan yap */
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  /* İkonu metin gibi maskeliyoruz */
+  -webkit-mask-image: linear-gradient(black, black);
+  mask-image: linear-gradient(black, black);
+
+  display: inline-block;
+}
+
+@keyframes shine {
+  0% {
+    left: -75%;
+  }
+  100% {
+    left: 120%;
+  }
+}
+
+.animate-shine {
+  animation: shine 1.2s cubic-bezier(0.4,0,0.2,1) infinite;
+}
