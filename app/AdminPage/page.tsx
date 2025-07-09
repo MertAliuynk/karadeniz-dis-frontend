@@ -122,7 +122,7 @@ const Notification = ({ message, type, onClose }: { message: string; type: 'succ
 );
 
 const AdminPage: React.FC = () => {
-  const router = useRouter();
+  // const router = useRouter(); // Kullanılmıyor, kaldırıldı
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -240,11 +240,12 @@ const AdminPage: React.FC = () => {
       setFaqs(faqsRes.data);
       setTimelineItems(timelineRes.data);
       setError('');
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Veri yükleme hatası:', err);
-      if (err.response) {
-        setError(`Veriler yüklenemedi: ${err.response.data.detail || err.response.statusText}`);
-      } else if (err.request) {
+      if (err && typeof err === 'object' && 'response' in err) {
+        const errorObj = err as { response?: { data?: { detail?: string }, statusText?: string } };
+        setError(`Veriler yüklenemedi: ${errorObj.response?.data?.detail || errorObj.response?.statusText}`);
+      } else if (err && typeof err === 'object' && 'request' in err) {
         setError('Sunucuya bağlanılamadı. Lütfen backend servisinin çalıştığından emin olun.');
       } else {
         setError('Beklenmeyen bir hata oluştu.');
@@ -261,7 +262,7 @@ const AdminPage: React.FC = () => {
         return dateA.getTime() - dateB.getTime();
       });
       setAppointments(sortedAppointments);
-    } catch (err) {
+    } catch (err: unknown) {
       console.error('Randevular yüklenemedi:', err);
     }
   };
@@ -270,7 +271,7 @@ const AdminPage: React.FC = () => {
     try {
       const response = await axios.get('https://webapi.karadenizdis.com/api/prices');
       setPrices(response.data);
-    } catch (err) {
+    } catch (err: unknown) {
       console.error('Fiyatlar yüklenirken hata:', err);
     }
   };
@@ -285,7 +286,7 @@ const AdminPage: React.FC = () => {
       } else {
         setError('Geçersiz kullanıcı adı veya şifre');
       }
-    } catch (err) {
+    } catch (err: unknown) {
       setError('Giriş yapılamadı');
     }
   };
@@ -410,7 +411,7 @@ const AdminPage: React.FC = () => {
     }
   };
 
-  const handleEdit = (item: any, endpoint: string) => {
+  const handleEdit = (item: unknown, endpoint: string) => {
     if (endpoint === 'branches') {
       setFormData({
         ...item,
