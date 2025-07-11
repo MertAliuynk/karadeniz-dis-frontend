@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/sekmelogo.png",
   },
+  colorScheme: "light",
 };
 
 export default function RootLayout({

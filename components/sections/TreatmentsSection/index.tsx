@@ -98,14 +98,14 @@ const Treatments: React.FC = () => {
           {visibleTreatments.map((treatment) => (
             <div
               key={treatment.id}
-              className="relative w-full bg-white rounded-xl overflow-hidden cursor-pointer group shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-2 flex flex-col"
+              className="relative w-full bg-white rounded-xl overflow-hidden cursor-pointer group shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-2 flex flex-col justify-center items-center"
               style={{ minHeight: '0' }}
             >
-              <div className="relative w-full aspect-[4/3] flex flex-col justify-end items-center text-center p-4 bg-gradient-to-t from-[#4964A9]/10 to-white">
-                <h3 className="text-base sm:text-lg md:text-xl font-semibold text-gray-900 mb-1 drop-shadow-lg z-10 line-clamp-2">
+              <div className="relative w-full aspect-[4/3] flex flex-col justify-center items-center text-center p-4 bg-gradient-to-t from-[#4964A9]/10 to-white">
+                <h3 className="text-base sm:text-lg md:text-xl font-semibold text-gray-900 mb-1 drop-shadow-lg z-10 line-clamp-2 flex items-center justify-center w-full">
                   {treatment.title}
                 </h3>
-                <p className="text-xs sm:text-sm md:text-base text-gray-700 line-clamp-2 z-10">
+                <p className="text-xs sm:text-sm md:text-base text-gray-700 line-clamp-2 z-10 flex items-center justify-center w-full">
                   {treatment.short_description}
                 </p>
                 <div className="absolute inset-0 w-full h-full z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
