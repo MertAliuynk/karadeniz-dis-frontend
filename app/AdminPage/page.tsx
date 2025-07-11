@@ -1358,7 +1358,7 @@ const AdminPage: React.FC = () => {
                     <input
                       type="number"
                       name="lat"
-                      placeholder="Enlem (Latitude)"
+                      placeholder="Enlem"
                       value={formData.lat || ''}
                       onChange={handleFormChange}
                       step="any"
@@ -1369,7 +1369,7 @@ const AdminPage: React.FC = () => {
                     <input
                       type="number"
                       name="lng"
-                      placeholder="Boylam (Longitude)"
+                      placeholder="Boylam "
                       value={formData.lng || ''}
                       onChange={handleFormChange}
                       step="any"
@@ -1380,7 +1380,7 @@ const AdminPage: React.FC = () => {
                 <input
                   type="text"
                   name="phone"
-                  placeholder="Telefon (örn: 0555 123 45 67)"
+                  placeholder="Telefon (örn: 0541 942 51 29)"
                   value={formData.phone || ''}
                   onChange={handleFormChange}
                   className="w-full p-2 mb-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#4964A9]"
@@ -1390,7 +1390,7 @@ const AdminPage: React.FC = () => {
                 <input
                   type="email"
                   name="email"
-                  placeholder="E-posta (örn: info@karadenizdis.com)"
+                  placeholder="E-posta"
                   value={formData.email || ''}
                   onChange={handleFormChange}
                   className="w-full p-2 mb-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-[#4964A9]"
