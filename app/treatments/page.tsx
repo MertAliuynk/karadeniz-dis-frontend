@@ -125,11 +125,11 @@ export default function TreatmentsPage() {
                           loading={treatment.featured ? 'eager' : 'lazy'}
                         />
                       </div>
-                      <div className="flex-1 flex flex-col justify-between p-3 xs:p-4 sm:p-5 md:p-6">
-                        <h3 className="text-sm xs:text-base sm:text-xl md:text-2xl font-semibold text-gray-800 mb-1 xs:mb-2 md:mb-3">
+                      <div className="flex-1 flex flex-col items-center text-center justify-between p-3 xs:p-4 sm:p-5 md:p-6">
+                        <h3 className="text-sm xs:text-base sm:text-xl md:text-2xl font-semibold text-gray-800 mb-1 xs:mb-2 md:mb-3 line-clamp-2 min-h-[2.5rem] xs:min-h-[3rem] sm:min-h-[3.5rem] flex items-center w-full">
                           {treatment.title}
                         </h3>
-                        <p className="text-xs xs:text-sm sm:text-base md:text-lg text-gray-600 line-clamp-2">
+                        <p className="text-xs xs:text-sm sm:text-base md:text-lg text-gray-600 line-clamp-2 w-full">
                           {treatment.short_description}
                         </p>
                       </div>
