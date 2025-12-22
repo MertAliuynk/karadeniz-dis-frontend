@@ -187,7 +187,7 @@ const AppointmentSection: React.FC = () => {
 
   const generateTimeOptions = () => {
     const times = [];
-    for (let hour = 8; hour < 20; hour++) {
+    for (let hour = 10; hour < 18; hour++) {
       times.push(`${hour.toString().padStart(2, '0')}:00`);
       times.push(`${hour.toString().padStart(2, '0')}:30`);
     }
