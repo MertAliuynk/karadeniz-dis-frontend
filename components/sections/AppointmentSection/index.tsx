@@ -335,34 +335,44 @@ const AppointmentSection: React.FC = () => {
                   </p>
                 </div>
               ) : (
-                paginatedDoctors.map((doctor) => (
-                  <div
-                    key={doctor.id}
-                    onClick={() => handleDoctorSelect(doctor.id)}
-                    className={`flex-shrink-0 w-48 sm:w-56 lg:w-64 p-4 rounded-lg border-2 cursor-pointer transition-all duration-300 hover:shadow-lg ${
-                      appointmentData.doctorId === doctor.id.toString()
-                        ? 'border-[#4964A9] bg-[#4964A9]/5 shadow-md'
-                        : 'border-gray-300 hover:border-[#4964A9]/50'
-                    }`}
-                  >
-                    <div className="flex flex-col items-center space-y-3">
-                      <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
-                        {doctor.image ? (
-                          <img
-                            src={`https://webapi.karadenizdis.com${doctor.image}`}
-                            alt={doctor.name}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <span className="text-2xl sm:text-3xl lg:text-4xl text-gray-500">👨‍⚕️</span>
+                paginatedDoctors.map((doctor) => {
+                  const isMurat = doctor.name.trim() === "Murat KARAKUZU";
+                  console.log("[DOCTOR CARD]", {doctor, isMurat, selectedDoctorId: appointmentData.doctorId});
+                  return (
+                    <div
+                      key={doctor.id}
+                      onClick={isMurat ? undefined : () => {console.log("[DOCTOR SELECT]", doctor); handleDoctorSelect(doctor.id);}}
+                      className={`flex-shrink-0 w-48 sm:w-56 lg:w-64 p-4 rounded-lg border-2 transition-all duration-300 ${
+                        isMurat
+                          ? 'border-red-500 bg-red-100 cursor-not-allowed opacity-60'
+                          : 'cursor-pointer hover:shadow-lg ' + (appointmentData.doctorId === doctor.id.toString()
+                              ? 'border-[#4964A9] bg-[#4964A9]/5 shadow-md'
+                              : 'border-gray-300 hover:border-[#4964A9]/50')
+                      }`}
+                      style={isMurat ? { pointerEvents: 'none' } : {}}
+                    >
+                      <div className="flex flex-col items-center space-y-3">
+                        <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+                          {doctor.image ? (
+                            <img
+                              src={`https://webapi.karadenizdis.com${doctor.image}`}
+                              alt={doctor.name}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <span className="text-2xl sm:text-3xl lg:text-4xl text-gray-500">👨‍⚕️</span>
+                          )}
+                        </div>
+                        <h3 className="text-sm sm:text-base lg:text-lg font-semibold text-center text-gray-800">
+                          {doctor.name}
+                        </h3>
+                        {isMurat && (
+                          <div className="text-red-600 font-bold text-center text-xs mt-2">Randevu alınamaz</div>
                         )}
                       </div>
-                      <h3 className="text-sm sm:text-base lg:text-lg font-semibold text-center text-gray-800">
-                        {doctor.name}
-                      </h3>
                     </div>
-                  </div>
-                ))
+                  );
+                })
               )}
             </div>
           </div>
@@ -425,26 +435,32 @@ const AppointmentSection: React.FC = () => {
             <div className="w-full max-w-[300px] sm:max-w-[350px] lg:max-w-[400px] px-2">
               <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-4 text-center">Müsait Saatler</h3>
               <div className="grid grid-cols-4 gap-2 sm:gap-3">
-                {generateTimeOptions().map((time) => {
-                  const isBooked = bookedHours.includes(time);
-                  const isSelected = appointmentData.time === time;
-                  return (
-                    <button
-                      key={time}
-                      onClick={() => handleTimeSelect(time)}
-                      disabled={isBooked}
-                      className={`p-2 sm:p-3 rounded-lg text-xs sm:text-sm font-medium transition-all duration-300 ${
-                        isBooked
-                          ? 'bg-red-100 text-red-500 cursor-not-allowed opacity-60'
-                          : isSelected
-                          ? 'bg-[#4964A9] text-white shadow-lg scale-105'
-                          : 'bg-white text-gray-800 hover:bg-gray-100 border-2 border-gray-200 hover:border-[#4964A9] hover:scale-105'
-                      } min-h-[40px] sm:min-h-[48px]`}
-                    >
-                      {time}
-                    </button>
-                  );
-                })}
+                {(() => {
+                  const selectedDoctor = doctors.find(d => d.id.toString() === appointmentData.doctorId);
+                  const isMurat = selectedDoctor ? selectedDoctor.name.includes("Murat KARAKUZU") : false;
+                  console.log("[TIME BUTTONS]", {selectedDoctor, isMurat, bookedHours, selectedTime: appointmentData.time});
+                  return generateTimeOptions().map((time) => {
+                    const isBooked = bookedHours.includes(time) || isMurat;
+                    const isSelected = appointmentData.time === time;
+                    console.log("[TIME OPTION]", {time, isBooked, isSelected, isMurat, booked: bookedHours.includes(time)});
+                    return (
+                      <button
+                        key={time}
+                        onClick={() => {console.log("[TIME SELECT]", {time, isBooked, isMurat}); handleTimeSelect(time);}}
+                        disabled={isBooked}
+                        className={`p-2 sm:p-3 rounded-lg text-xs sm:text-sm font-medium transition-all duration-300 ${
+                          isBooked
+                            ? 'bg-red-100 text-red-500 cursor-not-allowed opacity-60'
+                            : isSelected
+                            ? 'bg-[#4964A9] text-white shadow-lg scale-105'
+                            : 'bg-white text-gray-800 hover:bg-gray-100 border-2 border-gray-200 hover:border-[#4964A9] hover:scale-105'
+                        } min-h-[40px] sm:min-h-[48px]`}
+                      >
+                        {time}
+                      </button>
+                    );
+                  });
+                })()}
               </div>
             </div>
           )}
